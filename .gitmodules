@@ -1,0 +1,6 @@
+[submodule "lib/entityx"]
+	path = lib/entityx
+	url = https://github.com/alecthomas/entityx.git
+[submodule "lib/SFML"]
+	path = lib/SFML
+	url = https://github.com/SFML/SFML.git

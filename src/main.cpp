@@ -397,6 +397,46 @@ public:
 };
 
 
+class Event : public Rocket::Core::EventListener
+{
+public:
+    Event(const Rocket::Core::String& value, Rocket::Core::Element* /*element*/) : m_value(value){}
+    virtual ~Event(){}
+    
+    /// Sends the event value through to Invader's event processing system.
+    virtual void ProcessEvent(Rocket::Core::Event& event)
+    {
+        std::cout<<"EVENT: "<<m_value.CString()<<"\n";
+    }
+    
+    /// Destroys the event.
+    virtual void OnDetach(Rocket::Core::Element* element)
+    {
+        ROCKET_UNUSED(element);
+        
+        delete this;
+    }
+    
+private:
+    Rocket::Core::String m_value;
+};
+
+class EventInstancer : public Rocket::Core::EventListenerInstancer
+{
+public:
+    EventInstancer(){}
+    virtual ~EventInstancer(){}
+    
+    /// Instances a new event handle for Invaders.
+    virtual Rocket::Core::EventListener* InstanceEventListener(const Rocket::Core::String& value, Rocket::Core::Element* element)
+    {
+        return new Event(value, element);
+    }
+    
+    /// Destroys the instancer.
+    virtual void Release(){}
+};
+
 int main(int argc, char **argv)
 {
 #ifdef ROCKET_PLATFORM_WIN32
@@ -447,6 +487,10 @@ int main(int argc, char **argv)
 	if(!Rocket::Core::Initialise())
 		return 1;
 
+    EventInstancer* event_instancer = new EventInstancer();
+    Rocket::Core::Factory::RegisterEventListenerInstancer(event_instancer);
+    event_instancer->RemoveReference();
+    
 	Rocket::Core::FontDatabase::LoadFontFace("Delicious-Bold.otf");
 	Rocket::Core::FontDatabase::LoadFontFace("Delicious-BoldItalic.otf");
 	Rocket::Core::FontDatabase::LoadFontFace("Delicious-Italic.otf");

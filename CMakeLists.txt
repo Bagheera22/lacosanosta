@@ -10,10 +10,7 @@ SET( PROJ_HEADERS   "" )
 
 project (${PROJ_NAME} )
 
-set(ENTITYX_BUILD_SHARED false)
-
 include_directories(${CMAKE_SOURCE_DIR})
-
 
 # Default compiler args
 if (CMAKE_CXX_COMPILER_ID MATCHES "(GNU|.*Clang)")
@@ -54,11 +51,12 @@ include_directories(
 
 include_directories("${PROJ_PATH}/lib/entityx")
 include_directories("${PROJ_PATH}/lib/SFML/include")
+include_directories("${PROJ_PATH}/lib/Rocket/include")
 
 
 add_subdirectory("${PROJ_PATH}/lib/entityx")
 add_subdirectory("${PROJ_PATH}/lib/SFML")
-
+add_subdirectory("${PROJ_PATH}/lib/Rocket/Build")
 
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/exe" )
 set( CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/exe" )
@@ -87,6 +85,12 @@ endmacro()
 # Execute the macro
 GroupSources(src)
 
+set(ENTITYX_BUILD_SHARED 0)
+set(ENTITYX_BUILD_TESTING 0)
+SET(FREETYPE_INCLUDE_DIRS "${PROJ_PATH}/lib/SFML/extlibs/headers/freetype2;${PROJ_PATH}/lib/SFML/extlibs/headers/freetype2")
+
+# todo do diferent platforms
+SET(FREETYPE_LIBRARY "${PROJ_PATH}/lib/SFML/extlibs/libs-osx/Frameworks/freetype.framework/freetype")
 add_executable(${PROJ_NAME} ${files} )
 
 target_link_libraries( ${PROJ_NAME} entityx)
@@ -95,6 +99,10 @@ target_link_libraries( ${PROJ_NAME} sfml-window)
 target_link_libraries( ${PROJ_NAME} sfml-network)
 target_link_libraries( ${PROJ_NAME} sfml-graphics)
 target_link_libraries( ${PROJ_NAME} sfml-audio)
+
+target_link_libraries( ${PROJ_NAME} RocketControls)
+target_link_libraries( ${PROJ_NAME} RocketCore)
+target_link_libraries( ${PROJ_NAME} RocketDebugger)
 
 
 

@@ -1,0 +1,1 @@
+cd build && cmake ../ -DENTITYX_BUILD_SHARED=0 -DENTITYX_BUILD_TESTING=0

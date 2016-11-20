@@ -4,3 +4,6 @@
 [submodule "lib/SFML"]
 	path = lib/SFML
 	url = https://github.com/SFML/SFML.git
+[submodule "lib/Rocket"]
+	path = lib/Rocket
+	url = https://github.com/libRocket/libRocket.git

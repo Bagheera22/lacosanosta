@@ -1,4 +1,4 @@
-# lacosanosta
+#proof of concept
 
 - demo sfml + rocket + entityx
 

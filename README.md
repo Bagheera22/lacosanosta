@@ -1,4 +1,4 @@
-#proof of concept
+# Proof of concept
 
 - demo sfml + rocket + entityx
 
